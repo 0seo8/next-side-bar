@@ -1,7 +1,9 @@
 ## 개발환경
+- node v18.17.0
 - Next.js 14
 - tailwind.css
-- TypeScript
+- typescript ^5
+
 
 
 ## 사용 라이브러리 및 패키지
