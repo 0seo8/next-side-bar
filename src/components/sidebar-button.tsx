@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, ButtonProps} from "@/components/ui/button";
 import { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { SheetClose } from '@/components/ui/sheet';
 
 interface SidebarButtonProps extends ButtonProps {
   icon?: LucideIcon
@@ -18,4 +19,12 @@ export default function SidebarButton({ icon : Icon, className, children, ...pro
     <span>{children}</span>
   </Button>
  );
+}
+
+export function SideBarButtonSheet(props: SidebarButtonProps){
+  return (
+    <SheetClose asChild>
+      <SidebarButton {...props} />
+    </SheetClose>
+  )
 }

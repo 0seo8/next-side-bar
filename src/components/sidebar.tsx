@@ -41,7 +41,9 @@ const sidebarItems: SidebarItems = {
 }
 
 export default function Sidebar() {
-	const isDesktop = useMediaQuery('(min-width: 640px)')
+	const isDesktop = useMediaQuery('(min-width: 640px)',{
+		initializeWithValue: false
+	})
 
 	if(isDesktop)  return (
 		<SidebarDesktop sidebarItems={sidebarItems}/>
@@ -49,3 +51,4 @@ export default function Sidebar() {
 
 	return <SidebarMobile sidebarItems={sidebarItems} />;
 }
+
