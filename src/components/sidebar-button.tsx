@@ -1,30 +1,35 @@
 import React from 'react';
-import {Button, ButtonProps} from "@/components/ui/button";
-import { LucideIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Button, ButtonProps } from '@/components/ui/button';
+import { LucideIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { SheetClose } from '@/components/ui/sheet';
 
 interface SidebarButtonProps extends ButtonProps {
-  icon?: LucideIcon
+  icon?: LucideIcon;
 }
 
-export default function SidebarButton({ icon : Icon, className, children, ...props }: SidebarButtonProps) {
+export default function SidebarButton({
+  icon: Icon,
+  className,
+  children,
+  ...props
+}: SidebarButtonProps) {
   return (
-  <Button
-  variant="ghost"
-  className={cn('gap-2 justify-start', className)}
-  {...props}
-  >
-    {Icon && <Icon size={20}/>}
-    <span>{children}</span>
-  </Button>
- );
+    <Button
+      variant="ghost"
+      className={cn('gap-2 justify-start', className)}
+      {...props}
+    >
+      {Icon && <Icon size={20} />}
+      <span>{children}</span>
+    </Button>
+  );
 }
 
-export function SideBarButtonSheet(props: SidebarButtonProps){
+export function SideBarButtonSheet(props: SidebarButtonProps) {
   return (
     <SheetClose asChild>
       <SidebarButton {...props} />
     </SheetClose>
-  )
+  );
 }
