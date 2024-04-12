@@ -1,5 +1,4 @@
 'use client';
-
 import SidebarButton from '@/components/sidebar-button';
 import { SidebarItems } from '@/types';
 import Link from 'next/link';
@@ -13,8 +12,8 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { LogOut, MoreHorizontal, Settings } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import React, { ReactNode, useState } from 'react';
-
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 interface SidebarDesktopProps {
   sidebarItems: SidebarItems;
 }
@@ -31,38 +30,62 @@ export default function SidebarDesktop({ sidebarItems }: SidebarDesktopProps) {
     }
   };
 
+  const handleMenuItemClick = (href: string) => {
+    toggleSubMenu(href);
+  };
+
   return (
     <aside className="w-[270px] max-w-xs h-screen fixed left-0 top-0 z-40 border-r">
       <div className="h-full px-3 py-4">
-        <h3 className="mx-3 text-lg font-semibold text-foreground">Twitter</h3>
+        <h3 className="mx-3 text-lg font-semibold text-foreground w-full">
+          Twitter
+        </h3>
         <div className="mt-5">
           <div className="flex flex-col gap-1 w-full">
             {sidebarItems.links.map((link, index) =>
               !link.menus ? (
                 <React.Fragment key={link.href}>
-                  <SidebarButton
-                    variant={pathname === link.href ? 'secondary' : 'ghost'}
-                    icon={link.icon}
-                    className="w-full"
-                  >
-                    {link.label}
-                  </SidebarButton>
+                  <Link href={link.href}>
+                    <SidebarButton
+                      variant={pathname === link.href ? 'secondary' : 'ghost'}
+                      icon={link.icon}
+                      className="w-full"
+                    >
+                      {link.label}
+                    </SidebarButton>
+                  </Link>
                 </React.Fragment>
               ) : (
                 <React.Fragment key={link.href}>
                   <React.Fragment>
-                    <div
-                      onClick={() => toggleSubMenu(link.href)}
-                      className="relative"
+                    <Link
+                      href={link.href}
+                      className="flex items-center justify-between"
                     >
                       <SidebarButton
                         variant={pathname === link.href ? 'secondary' : 'ghost'}
                         icon={link.icon}
-                        className="w-full"
+                        onClick={() => handleMenuItemClick(link.href)}
                       >
-                        {link.label}
+                        <div className="h-6 w-6">{link.label}</div>
                       </SidebarButton>
-                    </div>
+                      <svg
+                        onClick={(e) => {
+                          e.preventDefault();
+                          toggleSubMenu(link.href);
+                        }}
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        className={`cursor-pointer inline w-4 h-4 mt-1 ml-1 transition-transform
+                        duration-200 transform md:-mt-1 ${activeSubMenus.includes(link.href) ? 'rotate-0' : 'rotate-180'}`}
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                          clipRule="evenodd"
+                        ></path>
+                      </svg>
+                    </Link>
                   </React.Fragment>
                   {activeSubMenus.includes(link.href) && (
                     <div className="ml-6">
