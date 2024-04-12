@@ -15,12 +15,13 @@ import { usePathname } from 'next/navigation';
 import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Drawer, DrawerContent, DrawerTrigger } from './ui/drawer';
+import {useState} from "react";
 
 interface SidebarMobileProps {
   sidebarItems: SidebarItems;
 }
 
-export default function SidebarMobile(props :SidebarMobileProps) {
+export default function SidebarMobile({sidebarItems} :SidebarMobileProps) {
   const pathname = usePathname();
  return (
     <Sheet>
@@ -42,7 +43,7 @@ export default function SidebarMobile(props :SidebarMobileProps) {
         </SheetHeader>
         <div className="h-full">
           <div className="mt-5 flex flex-col w-full gap-1">
-            {props.sidebarItems.links.map((link, idx) => (
+            {sidebarItems.links.map((link, idx) => (
               <Link key={idx} href={link.href}>
                 <SidebarButton
                   variant={pathname === link.href ? 'secondary' : 'ghost'}
@@ -50,7 +51,7 @@ export default function SidebarMobile(props :SidebarMobileProps) {
                   className="w-full">{link.label}</SidebarButton>
               </Link>
             ))}
-            {props.sidebarItems.extras}
+            {sidebarItems.extras}
           </div>
           <div className="absolute w-full bottom-4 px-1 left-0">
             <Separator className="absolute -top-3 left-0 w-full"/>
